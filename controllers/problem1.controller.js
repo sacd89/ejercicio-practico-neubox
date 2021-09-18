@@ -45,9 +45,7 @@ exports.problem1 = (req, res) => {
         const message = lines[3];
 
         if(!message.match(/^[a-zA-Z0-9_-]*$/)) {
-            console.log("PERRITO");
             return res.render('index', { error: 'Error en formato de mensaje', errorProblem2: null, resultProblem1: null, resultProblem2: null });
-
         }
 
         const m1 = numbers[0]

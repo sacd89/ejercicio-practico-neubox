@@ -52,7 +52,6 @@ exports.problem2 = (req, res) => {
 
             if(winnerPoint === player1) {
                 diffence = player1 - player2;
-                console.log("DIFERENCE 1", diffence);
                 pointsPlayer1.push(diffence);
             } else {
                 diffence = player2 - player1;
