@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  h2 Problema 1
+  p Sube el archivo para resolver problema 1.
+  br
+  form(method='post', action="/upload-file", enctype='multipart/form-data')
+    input(type='file', name='fileUpload')
+    input(type='submit', value='Resolver')
+  br
+  if resultProblem1
+    span Respuesta:
+    br
+    span(style="color: green") #{resultProblem1}
+    br
+    form(method='post', action="/download-file", enctype='multipart/form-data')
+      input(type='hidden', name='problem', value="1")
+      input(type='submit', value='Descargar archivo')
+
+  if error
+    span(style="color: red") #{error}
+  br
+  h2 Problema 2
+  p Sube el archivo para resolver problema 2.
+  br
+  form(method='post', action="/upload-file-2", enctype='multipart/form-data')
+    input(type='file', name='fileUpload')
+    input(type='submit', value='Resolver')
+  br
+  if resultProblem2
+    span Respuesta:
+    br
+    span(id="resultProble2" style="color: green") #{resultProblem2}
+    br
+    form(method='post', action="/download-file", enctype='multipart/form-data')
+      input(type='hidden', name='problem', value="2")
+      input(type='submit', value='Descargar archivo')
+
+  if errorProblem2
+    span(id="errorProblem2" style="color: red") #{errorProblem2}
