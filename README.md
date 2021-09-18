@@ -3,6 +3,7 @@
 Para correr este programa siga las siguientes instrucciones en la terminal:
 
 npm i
+
 npm start
 
 El proyecto se generó con la siguiente versión de NodeJS v12.18.3
