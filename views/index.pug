@@ -5,36 +5,45 @@ block content
   p Sube el archivo para resolver problema 1.
   br
   form(method='post', action="/upload-file", enctype='multipart/form-data')
-    input(type='file', name='fileUpload')
-    input(type='submit', value='Resolver')
+    .input-group
+      .custom-file
+        input#inputGroup1.custom-file-input(type='file' aria-describedby='inputGroup1' name='fileUpload')
+        label#labelGroup1.custom-file-label(for='inputGroup1') Selecciona un archivo
+      .input-group-append
+        button#inputGroupFileAddon04.btn.btn-outline-secondary(type='submit') Resolver
   br
   if resultProblem1
-    span Respuesta:
-    br
-    span(style="color: green") #{resultProblem1}
+    .alert.alert-success(role='alert')
+      | #{resultProblem1}
     br
     form(method='post', action="/download-file", enctype='multipart/form-data')
       input(type='hidden', name='problem', value="1")
-      input(type='submit', value='Descargar archivo')
+      input.btn.btn-secondary(type='submit', value='Descargar archivo')
 
   if error
-    span(style="color: red") #{error}
+    .alert.alert-danger(role='alert')
+      | #{error}
   br
   h2 Problema 2
   p Sube el archivo para resolver problema 2.
   br
   form(method='post', action="/upload-file-2", enctype='multipart/form-data')
-    input(type='file', name='fileUpload')
-    input(type='submit', value='Resolver')
+    .input-group
+      .custom-file
+        input#inputGroup2.custom-file-input(type='file' aria-describedby='inputGroup2' name='fileUpload')
+        label#labelGroup2.custom-file-label(for='inputGroup2') Selecciona un archivo
+      .input-group-append
+        button#inputGroupFileAddon04.btn.btn-outline-secondary(type='submit') Resolver
   br
   if resultProblem2
-    span Respuesta:
-    br
-    span(id="resultProble2" style="color: green") #{resultProblem2}
+    .alert.alert-success(role='alert')
+      | #{resultProblem2}
     br
     form(method='post', action="/download-file", enctype='multipart/form-data')
       input(type='hidden', name='problem', value="2")
-      input(type='submit', value='Descargar archivo')
+      input.btn.btn-secondary(type='submit', value='Descargar archivo')
 
   if errorProblem2
-    span(id="errorProblem2" style="color: red") #{errorProblem2}
+    .alert.alert-danger(role='alert')
+      | #{errorProblem2}
+  
