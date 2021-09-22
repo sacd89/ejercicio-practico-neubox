@@ -45,25 +45,38 @@ exports.problem1 = (req, res) => {
         const message = lines[3];
 
         if(!message.match(/^[a-zA-Z0-9_-]*$/)) {
-            return res.render('index', { error: 'Error en formato de mensaje', errorProblem2: null, resultProblem1: null, resultProblem2: null });
+            return res.render('index', { error: 'Caracteres invalidos dentro del mensaje', errorProblem2: null, resultProblem1: null, resultProblem2: null });
         }
 
-        const m1 = numbers[0]
-        const m2 = numbers[1];
-        const n = numbers[2];
+        const m1 = +numbers[0]
+        const m2 = +numbers[1];
+        const n = +numbers[2];
 
         if ((m1 < 2 || m1 > 50)) {
             return res.render('index', { error: 'M1 no esta entre el rango de 2 a 50.', errorProblem2: null, resultProblem1: null, resultProblem2: null });
-
         }
 
         if ((m2 < 2 || m2 > 50)) {
             return res.render('index', { error: 'M2 no esta entre el rango de 2 a 50.', errorProblem2: null, resultProblem1: null, resultProblem2: null });
-
         }
 
         if (n < 3 || n > 5000) {
             return res.render('index', { error: 'N no esta entre el rango de 3 a 5000.', errorProblem2: null, resultProblem1: null, resultProblem2: null });
+        }
+
+        if(firstInstruction.length !== m1) {
+            return res.render('index', { error: `La primera instrucción no cuenta con el número de caracteres indicado: ${m1}`,
+                errorProblem2: null, resultProblem1: null, resultProblem2: null });
+        }
+
+        if(secondInstruction.length !== m2) {
+            return res.render('index', { error: `La segunda instrucción no cuenta con el número de caracteres indicado: ${m2}`,
+                errorProblem2: null, resultProblem1: null, resultProblem2: null });
+        }
+
+        if(message.length !== n) {
+            return res.render('index', { error: `El mensaje no cuenta con el número de caracteres indicado: ${n}`,
+                errorProblem2: null, resultProblem1: null, resultProblem2: null });
         }
 
         const messageHasError = message.split("").some((v, i, a) => {
@@ -134,13 +147,15 @@ _generateFileProblem1 = (res, finalContent) => {
  */
 _checkLetter = (array, m, i) => {
     const newI = i + 1;
-    if (m !== array[newI]) {
+    if (m !== array[newI] ||
+        ((m.toLowerCase() === 'r' || m.toLowerCase() === 'l' ) &&
+            m === array[newI] && ['a','e','i','o','u'].includes(array[newI+1]) && ['a','e','i','o','u'].includes(array[i - 1]))) {
 
         return true;
 
-    } else {
-        _checkLetter([...array], m, newI);
     }
+    _checkLetter([...array], m, newI);
+
 };
 
 /**

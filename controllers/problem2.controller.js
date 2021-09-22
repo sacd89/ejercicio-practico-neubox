@@ -27,8 +27,15 @@ exports.problem2 = (req, res) => {
         const data = file.data.toString('utf8');
         const lines = data.split('\n');
         const roundsNumber = +lines[0];
+        const points = [...lines].splice(1);
 
-        const totalRounds = lines.length - 1;
+        const totalRounds = points.length;
+
+        const numberRegex = /^[0-9]*$/;
+
+        if(!lines[0].match(numberRegex)) {
+            return res.render('index', { errorProblem2: 'Caracteres invalidos en el número de rondas indicadas.', errorProblem1: null, resultProblem1: null, resultProblem2: null });
+        }
 
         if(roundsNumber < 0 || roundsNumber > 10000) {
             return res.render('index', { errorProblem2: 'El número de rondas debe de ser mayor a 0 y menor o igual a 10000.', errorProblem1: null, resultProblem1: null, resultProblem2: null });
@@ -38,36 +45,25 @@ exports.problem2 = (req, res) => {
             return res.render('index', { errorProblem2: 'El número de rondas encontrado no coincide con los ingresados en el archivo.', errorProblem1: null, resultProblem1: null, resultProblem2: null });
         }
 
-        const pointsPlayer1 = [];
-        const pointsPlayer2 = [];
-        
-        for(let i = 1; i <= totalRounds ; i++) {
-            const points = lines[i].split(' ');
-            const player1 = +points[0];
-            const player2 = +points[1];
+        const differenceRoundes = [];
 
-            const winnerPoint = Math.max(...points);
-
-            let diffence = 0;
-
-            if(winnerPoint === player1) {
-                diffence = player1 - player2;
-                pointsPlayer1.push(diffence);
-            } else {
-                diffence = player2 - player1;
-                pointsPlayer2.push(diffence);
+        points.forEach(p => {
+            let results = p.split(' ');
+            
+            if(!results[0].match(numberRegex) || !results[1].match(numberRegex)) {
+                return res.render('index', { errorProblem2: 'Caracteres invalidos en los puntajes de las rondas.', errorProblem1: null, resultProblem1: null, resultProblem2: null });
             }
-        }
 
-        const maxPointPlayer1 = Math.max(...pointsPlayer1);
-        const maxPointPlayer2 = Math.max(...pointsPlayer2);
+            results = results.map(Number);
+            const playerWinner = results.indexOf(Math.max(...results)) + 1;
+            differenceRoundes.push([playerWinner, Math.abs(results[0] - results[1])]);
 
-        let finalContent = '';
-        if(maxPointPlayer1 > maxPointPlayer2) {
-            finalContent = `1 ${maxPointPlayer1}`;
-        } else {
-            finalContent = `2 ${maxPointPlayer2}`;
-        }
+        });
+
+        const maxPoint = differenceRoundes.map(e => Math.max.apply(null, e));
+        const winner = differenceRoundes[maxPoint.indexOf(Math.max(...maxPoint))];
+
+        const finalContent = winner.join(' ');
 
         return _generateFileProblem2(res, finalContent);
 
